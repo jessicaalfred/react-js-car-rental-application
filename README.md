@@ -111,4 +111,4 @@ Steps to be followed:
 
 ## Author ✒️
 
-- **Jessica Alfred*
+- **Jessica Alfred**

@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    jkube.io/scm-url: https://https://github.com/shravanatirtha/car-rental-system/berryride/berryride
+    jkube.io/issue-system: Redmine
+    jkube.io/issue-tracker-url: https://redmine.fic.udc.es/project/berryride/issues
+    jkube.io/scm-tag: head
+  labels:
+    app: berryride
+    provider: jkube
+    version: 0.0.1-SNAPSHOT
+    group: shravanatirtha
+  name: berryride
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: berryride
+      provider: jkube
+      group: shravanatirtha
+  template:
+    metadata:
+      annotations:
+        jkube.io/scm-url: https://https://github.com/shravanatirtha/car-rental-system/berryride/berryride
+        jkube.io/issue-system: Redmine
+        jkube.io/issue-tracker-url: https://redmine.fic.udc.es/project/berryride/issues
+        jkube.io/scm-tag: head
+      labels:
+        app: berryride
+        provider: jkube
+        version: 0.0.1-SNAPSHOT
+        group: shravanatirtha
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: https://github.com/shravanatirtha/car-rental-system:5050/berryride/berryride:latest
+        imagePullPolicy: Always
+        name: deploy-berryride
+        securityContext:
+          privileged: false
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+        - name: shravanatirtha

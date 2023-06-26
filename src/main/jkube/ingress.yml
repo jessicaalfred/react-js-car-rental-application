@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: berryride-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /berryride
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /berryride
+            pathType: Prefix
+            backend:
+              service:
+                name: berryride
+                port:
+                  number: 8080

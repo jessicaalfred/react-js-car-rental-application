@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- ********************************************** -->
+	<!-- **************** PROJECT INFO **************** -->
+	<!-- ********************************************** -->
+	<groupId>shravanatirtha</groupId>
+	<artifactId>berryride</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>Berry Ride</name>
+	<description>Berry Ride a car rental system</description>
+	<url>https://https://github.com/shravanatirtha/car-rental-system/berryride/berryride</url>
+	<inceptionYear>2022</inceptionYear>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.2.RELEASE</version>
+	</parent>
+
+	<!-- ********************************************** -->
+	<!-- **************** PROPERTIES ****************** -->
+	<!-- ********************************************** -->
+	<properties>
+		<!--  Compiler options -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>11</java.version>
+
+		<!--  Global properties -->
+		<project.contextPath>/berryride</project.contextPath>
+
+		<!--  Dependencies versions  -->
+		<jjwt.version>0.9.0</jjwt.version>
+
+		<!--  Plugins versions  -->
+		<plugin.jkube.version>1.3.0</plugin.jkube.version>
+		<plugin.jacoco.version>0.8.2</plugin.jacoco.version>
+		<plugin.frontend.version>1.6</plugin.frontend.version>
+		<plugin.m2e.version>1.0.0</plugin.m2e.version>
+		<plugin.sql.version>1.5</plugin.sql.version>
+	</properties>
+
+
+	<!-- ********************************************** -->
+	<!-- *************** REPOSITORIES ***************** -->
+	<!-- ********************************************** -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>tudelft</id>
+			<name>Tudelft Repository</name>
+			<url>https://simulation.tudelft.nl/maven/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+	<!-- ********************************************** -->
+	<!-- ************ RESOURCES AND SERVICES ********** -->
+	<!-- ********************************************** -->
+	<scm>
+		<connection>scm:git:https://https://github.com/shravanatirtha/car-rental-system/berryride/@shravanatirtha/berryride.git</connection>
+		<developerConnection>scm:git:https://https://github.com/shravanatirtha/car-rental-system/berryride/berryride.git</developerConnection>
+		<tag>head</tag>
+		<url>https://https://github.com/shravanatirtha/car-rental-system/berryride/berryride</url>
+	</scm>
+
+	<issueManagement>
+		<system>Redmine</system>
+		<url>https://redmine.fic.udc.es/project/berryride/issues</url>
+	</issueManagement>
+
+	<ciManagement>
+		<system>jenkins</system>
+		<url>https://jenkins.fic.udc.es/job/berryride</url>
+	</ciManagement>
+
+	<!-- ********************************************** -->
+	<!-- ****************** PROFILES ****************** -->
+	<!-- ********************************************** -->
+	<profiles>
+		<!-- ============================================== -->
+		<!-- ============= DATABASE PROFILES ============== -->
+		<!-- ============================================== -->
+		<profile>
+			<!-- H2 database profile -->
+			<!-- Prepares the project to make use of an H2 in-memory database -->
+			<id>h2</id>
+			<activation>
+				<!-- Active by default so it can be installed by CI -->
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!--  Data source properties -->
+				<dataSource.url>jdbc:h2:mem:berryride</dataSource.url>
+				<testDataSource.url>jdbc:h2:mem:berryrideTest</testDataSource.url>
+				<dataSource.user>sa</dataSource.user>
+				<dataSource.password></dataSource.password>
+			</properties>
+			<dependencies>
+				<dependency>
+					<!-- H2 database -->
+					<groupId>com.h2database</groupId>
+					<artifactId>h2</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
+	<!-- ********************************************** -->
+	<!-- **************** DEPENDENCIES **************** -->
+	<!-- ********************************************** -->
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jjwt.version}</version>
+		</dependency>
+
+<!--		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+		-->
+
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>javax.transaction-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+
+
+	</dependencies>
+
+
+	<!-- ********************************************** -->
+	<!-- ******************* BUILD ******************** -->
+	<!-- ********************************************** -->
+	<build>
+		<!-- ============================================== -->
+		<!-- =============== TEST RESOURCES =============== -->
+		<!-- ============================================== -->
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+
+		<!-- ============================================== -->
+		<!-- =================== PLUGINS ================== -->
+		<!-- ============================================== -->
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+
+			</plugin>
+
+			<!-- Kubernetes deployment config -->
+			<plugin>
+				<groupId>org.eclipse.jkube</groupId>
+				<artifactId>kubernetes-maven-plugin</artifactId>
+				<version>${plugin.jkube.version}</version>
+
+				<configuration>
+					<images>
+						<image>
+							<name>https://github.com/shravanatirtha/car-rental-system:5050/berryride/berryride</name>
+							<build>
+								<contextDir>${project.basedir}</contextDir>
+								<dockerFile>src/main/docker/Dockerfile</dockerFile>
+							</build>
+						</image>
+					</images>
+
+					<resources>
+						<controllerName>${project.artifactId}</controllerName>
+					</resources>
+
+					<enricher>
+						<config>
+							<jkube-service>
+								<type>LoadBalancer</type>
+								<port>8080</port>
+								<expose>true</expose>
+								<multiPort>true</multiPort>
+							</jkube-service>
+						</config>
+					</enricher>
+				</configuration>
+			</plugin>
+
+			<!-- Jacoco setup -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${plugin.jacoco.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<!-- attached to Maven test phase -->
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Frontend setup -->
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>${plugin.frontend.version}</version>
+				<configuration>
+					<workingDirectory>frontend</workingDirectory>
+					<installDirectory>target</installDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and yarn</id>
+						<goals>
+							<goal>install-node-and-yarn</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v14.17.3</nodeVersion>
+							<yarnVersion>v1.22.10</yarnVersion>
+						</configuration>
+						<phase>generate-resources</phase>
+					</execution>
+					<execution>
+						<id>yarn install</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+						<phase>generate-resources</phase>
+					</execution>
+					
+				<execution>
+						<id>yarn test</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<configuration>
+							<arguments>run test --coverage --watchAll=false</arguments>
+						</configuration>
+						<phase>generate-resources</phase>
+					</execution>
+					
+
+					<execution>
+						<id>yarn build</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<configuration>
+							<arguments>run build</arguments>
+						</configuration>
+						<phase>generate-resources</phase>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/classes/public</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/frontend/build</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<!-- ============================================== -->
+		<!-- ============= PLUGINS MANAGEMENT ============= -->
+		<!-- ============================================== -->
+		<pluginManagement>
+			<plugins>
+				<!-- This plugin's configuration is used to store Eclipse m2e 
+				     settings only. It has no influence on the Maven build
+				     itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>${plugin.m2e.version}</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>sql-maven-plugin</artifactId>
+										<versionRange>${plugin.sql.version}</versionRange>
+										<goals>
+											<goal>execute</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

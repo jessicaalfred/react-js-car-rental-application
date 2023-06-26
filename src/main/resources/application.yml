@@ -1,0 +1,30 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+spring:
+  
+  devtools:
+    restart:
+      trigger-file: reload
+    livereload:
+      enabled: false
+  jackson:
+    default-property-inclusion: NON_NULL
+  jpa:
+    hibernate:
+      ddl-auto: none
+      show-sql: true
+      format-sql: true
+      use-sql-comments: true
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+server:
+  servlet:
+    context-path: /berryride
+project:
+  jwt:
+    signKey: shravanatirtha
+    expirationMinutes: 1440
+
